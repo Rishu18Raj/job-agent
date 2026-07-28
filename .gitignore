@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.pyc
+service_account.json
+# NOTE: data/seen_jobs.db is intentionally NOT ignored -- it's committed back by the
+# GitHub Actions workflows to persist dedup state across scheduled runs.

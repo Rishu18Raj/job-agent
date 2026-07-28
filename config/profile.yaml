@@ -1,0 +1,83 @@
+candidate:
+  name: "Rishu Raj"
+  email: "rrishu40@gmail.com"
+  resume_path: "config/resume.txt"   # plain-text extract, used for LLM P1 scoring prompts
+
+  skills_and_domains:
+    - Debt Capital Markets (CPs, NCDs, cross-border AIF placements)
+    - Investment Banking (term loan refinancing, bridge-to-bond, M&A advisory)
+    - Fundraising & Investor Relations
+    - Financial due diligence & valuation (DCF, relative valuation)
+    - Compliance tracking & covenant monitoring
+    - Equity research
+    - Financial modeling / MIS / dashboarding
+    - Macro & industry landscaping
+
+  seniority_titles_match:
+    exact: ["Senior Associate", "Associate Manager", "Assistant Manager", "AM", "Manager"]
+    adjacent: ["Senior Analyst", "Team Lead", "AVP", "Senior Manager"]   # only if JD years-required < 3
+    entry_only: ["Analyst I", "Associate I", "Analyst"]  # 0-1 yr JDs
+    reject_titles: ["Director", "CXO", "Chief", "VP"]     # VP rejected UNLESS adjacent rule above applies
+
+# ---- Scoring weights, exactly as specified ----
+scoring:
+  composite:
+    p1_weight: 0.60   # skills/sector, LLM-based
+    p2_weight: 0.40   # logistics, rule-based
+
+  p1_skills:
+    # sub-weights within P1 (must sum to 1.0)
+    domain_sector_fit: 0.35
+    hard_skill_match: 0.30
+    transferable_skill_match: 0.20
+    achievement_signal_match: 0.15
+    hard_reject_floor:
+      domain_sector_fit_min: 40   # below this on domain fit -> auto-reject regardless of composite
+
+  p2_logistics:
+    # sub-weights within P2 (must sum to 1.0 when salary is disclosed; reweighted proportionally if not)
+    seniority_title: 0.35
+    experience_years: 0.20
+    location: 0.35
+    salary: 0.10
+
+    seniority_title_scores:
+      exact_band: 100
+      adjacent_band: 70
+      entry_or_stretch: 40
+      reject: 0    # Director+/CXO, or explicit 5+ yr min -> hard reject, skip LLM call
+
+    experience_years_scores:
+      "1-3": 100
+      "2-4": 85
+      "3-5_or_under_1": 70
+      "5_plus": 0   # hard reject, covers ranges like 4-6, 4-8
+
+    location_scores:
+      Bengaluru: 100
+      Remote: 100
+      Mumbai: 75
+      International: 75
+      Gurugram: 50
+      other_india_metro: 25
+      other: reject
+
+    salary_scores_lpa:
+      below_24: 0        # hard reject
+      "24_to_30": 50
+      above_30: 100
+      undisclosed: null  # component dropped, remaining 3 reweighted to sum 100%
+
+  action_thresholds:
+    surface_and_notify_min: 75   # >=75% -> stage + email
+    log_only_min: 50             # 50-74% -> sheet only, no email
+    discard_below: 50
+
+tier3_sources:
+  funding_feeds:
+    - name: "Inc42"
+      rss_url: "https://inc42.com/feed/"
+    - name: "YourStory"
+      rss_url: "https://yourstory.com/feed"
+  min_funding_usd: 2000000
+  stages: ["Seed", "Pre-Series A", "Series A"]

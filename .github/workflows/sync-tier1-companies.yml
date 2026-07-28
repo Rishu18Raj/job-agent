@@ -1,0 +1,32 @@
+name: Sync Tier 1 Companies
+
+on:
+  schedule:
+    - cron: "45 2 * * *"   # 08:15 IST daily, before the Tier1 scan
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "data/tier1_companies.txt"   # also run immediately when you edit the list
+
+jobs:
+  sync-tier1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements.txt
+
+      - name: Discover new Tier 1 firms
+        run: python -m src.sync_tier1_companies
+
+      - name: Commit updated company list
+        run: |
+          git config user.name "job-agent-bot"
+          git config user.email "actions@github.com"
+          git add config/companies_tier1.yaml
+          git diff --staged --quiet || git commit -m "Auto-discover new Tier 1 firms [skip ci]"
+          git push

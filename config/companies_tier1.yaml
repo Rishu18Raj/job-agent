@@ -1,0 +1,41 @@
+# Tier 1 firm list. Auto-populated/updated by src/sync_tier1_companies.py from
+# data/tier1_companies.txt. You can also hand-edit entries directly -- the sync
+# script only ADDS companies present in the .txt but missing here; it never
+# overwrites or removes an existing entry.
+
+companies:
+  - name: "Goldman Sachs"
+    board_type: "custom"
+    careers_url: "https://www.goldmansachs.com/careers/"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "Morgan Stanley"
+    board_type: "custom"
+    careers_url: "https://www.morganstanley.com/people-opportunities"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "Deutsche Bank"
+    board_type: "custom"
+    careers_url: "https://careers.db.com/"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "McKinsey & Company"
+    board_type: "custom"
+    careers_url: "https://www.mckinsey.com/careers"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "Bain & Company"
+    board_type: "custom"
+    careers_url: "https://www.bain.com/careers/"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "BCG"
+    board_type: "custom"
+    careers_url: "https://careers.bcg.com/"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "Deloitte India"
+    board_type: "custom"
+    careers_url: "https://www2.deloitte.com/in/en/careers.html"
+    needs_manual_review: false
+    discovery_note: "seeded manually"

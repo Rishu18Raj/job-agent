@@ -1,0 +1,551 @@
+# Tier 2 company list. Auto-populated/updated by src/sync_tier2_companies.py from
+# data/tier2_companies.txt. You can also hand-edit entries directly -- the sync
+# script only ADDS companies present in the .txt but missing here; it never
+# overwrites or removes an existing entry.
+#
+# Supported ats values and how confident auto-discovery is for each:
+#   greenhouse, lever, freshteam, keka  -- real structural detection, auto-scanned
+#     (Keka via sitemap.xml + server-rendered job detail pages -- see src/sources/keka.py)
+#   workday   -- auto-scanned only if URL fits *.wdN.myworkdayjobs.com, else manual
+#   darwinbox -- NEVER auto-scanned. Darwinbox career sites return bot-detection
+#     errors on non-browser requests (confirmed directly). Always needs_manual_review.
+#   generic   -- static-HTML best-effort fallback, expect a meaningful manual-review rate
+#
+# needs_manual_review: true means auto-discovery couldn't fully confirm the entry --
+# fix "token" (and possibly "ats") by hand before this company will be scanned.
+
+companies:
+- name: Paytm
+  ats: lever
+  token: paytm
+  needs_manual_review: false
+  discovery_note: seeded manually, confirmed via jobs.lever.co/paytm
+- name: Paytm Payments Services
+  ats: lever
+  token: paytmpayments
+  needs_manual_review: false
+  discovery_note: seeded manually, confirmed via jobs.lever.co/paytmpayments
+- name: Jupiter Money
+  ats: keka
+  token: jupiter
+  needs_manual_review: false
+  discovery_note: seeded manually, confirmed via jupiter.keka.com sitemap + jobdetails
+    pages
+- name: Razorpay
+  ats: generic_darwinbox_guess
+  token: https://razorpay.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Cashfree Payments
+  ats: generic_darwinbox_guess
+  token: https://cashfreepayments.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Mobikwik
+  ats: generic_darwinbox_guess
+  token: https://mobikwik.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Jupiter
+  ats: generic_darwinbox_guess
+  token: https://jupiter.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Fi Money
+  ats: lever
+  token: fi
+  needs_manual_review: false
+  discovery_note: auto-matched, 8 live postings at discovery time
+- name: Niyo
+  ats: generic_darwinbox_guess
+  token: https://niyo.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Zeta
+  ats: lever
+  token: zeta
+  needs_manual_review: false
+  discovery_note: auto-matched, 25 live postings at discovery time
+- name: Lendingkart
+  ats: generic_darwinbox_guess
+  token: https://lendingkart.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Moneyview
+  ats: generic_darwinbox_guess
+  token: https://moneyview.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Fibe
+  ats: generic_darwinbox_guess
+  token: https://fibe.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Slice
+  ats: greenhouse
+  token: slice
+  needs_manual_review: false
+  discovery_note: auto-matched, 49 live postings at discovery time
+- name: Axio
+  ats: generic_darwinbox_guess
+  token: https://axio.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Rupeek
+  ats: generic_darwinbox_guess
+  token: https://rupeek.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Kreditbee
+  ats: generic_darwinbox_guess
+  token: https://kreditbee.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: ClearTax
+  ats: generic_darwinbox_guess
+  token: https://cleartax.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Smallcase
+  ats: generic_darwinbox_guess
+  token: https://smallcase.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: INDMoney
+  ats: generic_darwinbox_guess
+  token: https://indmoney.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Wint Wealth
+  ats: generic_darwinbox_guess
+  token: https://wintwealth.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: BankBazaar
+  ats: generic_darwinbox_guess
+  token: https://bankbazaar.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Scripbox
+  ats: generic_darwinbox_guess
+  token: https://scripbox.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Perfios
+  ats: generic_darwinbox_guess
+  token: https://perfios.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Acko
+  ats: generic_darwinbox_guess
+  token: https://acko.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: InsuranceDekho
+  ats: generic_darwinbox_guess
+  token: https://insurancedekho.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Turtlemint
+  ats: generic_darwinbox_guess
+  token: https://turtlemint.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Coverfox
+  ats: generic_darwinbox_guess
+  token: https://coverfox.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: AssetPlus
+  ats: generic_darwinbox_guess
+  token: https://assetplus.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Care.fi
+  ats: freshteam
+  token: carefi
+  needs_manual_review: false
+  discovery_note: auto-matched, 5 live postings at discovery time
+- name: Freed
+  ats: generic_darwinbox_guess
+  token: https://freed.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Xflow
+  ats: generic_darwinbox_guess
+  token: https://xflow.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Otto Money
+  ats: generic_darwinbox_guess
+  token: https://ottomoney.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Mufin Finance
+  ats: generic_darwinbox_guess
+  token: https://mufinfinance.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Rovia
+  ats: generic_darwinbox_guess
+  token: https://rovia.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Emergent
+  ats: generic_darwinbox_guess
+  token: https://emergent.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Krutrim
+  ats: generic_darwinbox_guess
+  token: https://krutrim.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Sarvam AI
+  ats: generic_darwinbox_guess
+  token: https://sarvamai.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Gnani.ai
+  ats: generic_darwinbox_guess
+  token: https://gnaniai.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Smallest.ai
+  ats: generic_darwinbox_guess
+  token: https://smallestai.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Squadstack
+  ats: generic_darwinbox_guess
+  token: https://squadstack.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Portkey
+  ats: generic_darwinbox_guess
+  token: https://portkey.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Lyzr AI
+  ats: generic_darwinbox_guess
+  token: https://lyzrai.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Runable
+  ats: generic_darwinbox_guess
+  token: https://runable.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: TraqCheck
+  ats: generic_darwinbox_guess
+  token: https://traqcheck.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Gushwork
+  ats: lever
+  token: gushwork
+  needs_manual_review: false
+  discovery_note: auto-matched, 16 live postings at discovery time
+- name: Observe.AI
+  ats: greenhouse
+  token: observeai
+  needs_manual_review: false
+  discovery_note: auto-matched, 16 live postings at discovery time
+- name: NudgeBee
+  ats: generic_darwinbox_guess
+  token: https://nudgebee.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Blinkit
+  ats: generic_darwinbox_guess
+  token: https://blinkit.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Meesho
+  ats: lever
+  token: meesho
+  needs_manual_review: false
+  discovery_note: auto-matched, 46 live postings at discovery time
+- name: Zepto
+  ats: generic_darwinbox_guess
+  token: https://zepto.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Bachatt
+  ats: generic_darwinbox_guess
+  token: https://bachatt.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Equal AI
+  ats: generic_darwinbox_guess
+  token: https://equalai.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Signzy
+  ats: generic_darwinbox_guess
+  token: https://signzy.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Freo
+  ats: generic_darwinbox_guess
+  token: https://freo.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Kissht
+  ats: generic_darwinbox_guess
+  token: https://kissht.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Phonepe
+  ats: greenhouse
+  token: phonepe
+  needs_manual_review: false
+  discovery_note: auto-matched, 66 live postings at discovery time
+- name: Postman
+  ats: greenhouse
+  token: postman
+  needs_manual_review: false
+  discovery_note: auto-matched, 116 live postings at discovery time
+- name: Swiggy
+  ats: generic_darwinbox_guess
+  token: https://swiggy.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: CRED
+  ats: lever
+  token: cred
+  needs_manual_review: false
+  discovery_note: auto-matched, 3 live postings at discovery time
+- name: Lenskart
+  ats: generic_darwinbox_guess
+  token: https://lenskart.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: PhysicsWallah
+  ats: generic_darwinbox_guess
+  token: https://physicswallah.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Zerodha
+  ats: generic_darwinbox_guess
+  token: https://zerodha.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Udaan
+  ats: generic_darwinbox_guess
+  token: https://udaan.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Delhivery
+  ats: generic_darwinbox_guess
+  token: https://delhivery.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.

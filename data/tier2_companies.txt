@@ -1,0 +1,69 @@
+# One company name per line. Blank lines and lines starting with # are ignored.
+# The sync script reads this file daily, diffs it against config/companies_tier2.yaml,
+# and auto-discovers the ATS + token for anything new.
+#
+# Paste your actual company list here, replacing the examples below.
+
+Paytm
+Razorpay
+Cashfree Payments
+Mobikwik
+Jupiter
+Fi Money
+Niyo
+Zeta
+Lendingkart
+Moneyview
+Fibe
+Slice
+Axio
+Rupeek
+Kreditbee
+ClearTax
+Smallcase
+INDMoney
+Wint Wealth
+BankBazaar
+Scripbox
+Perfios
+Acko
+InsuranceDekho
+Turtlemint
+Coverfox
+AssetPlus
+Care.fi
+Freed
+Xflow
+Otto Money
+Mufin Finance
+Rovia
+Emergent
+Krutrim
+Sarvam AI
+Gnani.ai
+Smallest.ai
+Squadstack
+Portkey
+Lyzr AI
+Runable
+TraqCheck
+Gushwork
+Observe.AI
+NudgeBee
+Blinkit
+Meesho
+Zepto
+Bachatt
+Equal AI 
+Signzy
+Freo
+Kissht
+Phonepe
+Postman
+Swiggy
+CRED
+Lenskart
+PhysicsWallah
+Zerodha
+Udaan
+Delhivery
