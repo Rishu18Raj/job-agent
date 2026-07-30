@@ -5,4 +5,16 @@
 # Paste your actual company list here, replacing the examples below.
 
 Goldman Sachs
-McKinsey & Company
+JP Morgan
+Morgan Stanley
+Deutsche Bank
+UBS
+Moelis
+Lazard
+Citibank
+Avendus Capital
+EY
+PricewaterhouseCoopers
+Deloitte
+Alvarez & Marsal
+
