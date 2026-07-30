@@ -36,4 +36,4 @@ def get_client() -> genai.Client:
     return _client
 
 
-MODEL_NAME = "gemini-3.6-flash"  # check ai.google.dev/gemini-api/docs/models for current default before relying on this long-term
+MODEL_NAME = "publishers/google/models/gemini-3.6-flash"  # check ai.google.dev/gemini-api/docs/models for current default before relying on this long-term
