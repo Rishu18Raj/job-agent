@@ -4,7 +4,7 @@
 # overwrites or removes an existing entry.
 #
 # Supported ats values and how confident auto-discovery is for each:
-#   greenhouse, lever, freshteam, keka  -- real structural detection, auto-scanned
+#   greenhouse, lever, ashby, freshteam, keka  -- real structural detection, auto-scanned
 #     (Keka via sitemap.xml + server-rendered job detail pages -- see src/sources/keka.py)
 #   workday   -- auto-scanned only if URL fits *.wdN.myworkdayjobs.com, else manual
 #   darwinbox -- NEVER auto-scanned. Darwinbox career sites return bot-detection
@@ -302,15 +302,6 @@ companies:
     it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
     company_router.py) and fix the token if the URL differs. If it 404s, this company
     likely uses Workday or a custom page -- replace token with the real URL.
-# - name: Smallest.ai
-#  ats: ashby
- # token: smallest
-  #needs_manual_review: true
-  #discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
-#    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
- #   it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
- #   company_router.py) and fix the token if the URL differs. If it 404s, this company
- #   likely uses Workday or a custom page -- replace token with the real URL. ##
 - name: Squadstack
   ats: generic_darwinbox_guess
   token: https://www.squadstack.ai/careers
@@ -506,6 +497,42 @@ companies:
 - name: Delhivery
   ats: generic_darwinbox_guess
   token: https://delhivery.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Jupiter
+  ats: generic_darwinbox_guess
+  token: https://jupiter.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Mufin Finance
+  ats: generic_darwinbox_guess
+  token: https://mufinfinance.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Krutrim
+  ats: generic_darwinbox_guess
+  token: https://krutrim.darwinbox.in/ms/candidatev2/main/careers/home
+  needs_manual_review: true
+  discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
+    above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
+    it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
+    company_router.py) and fix the token if the URL differs. If it 404s, this company
+    likely uses Workday or a custom page -- replace token with the real URL.
+- name: Smallest.ai
+  ats: generic_darwinbox_guess
+  token: https://smallestai.darwinbox.in/ms/candidatev2/main/careers/home
   needs_manual_review: true
   discovery_note: not found on Greenhouse/Lever/Freshteam/Keka via probing. The token
     above is an UNVERIFIED pattern-based guess for a possible Darwinbox URL -- open
