@@ -41,20 +41,36 @@ def _score_title(jd_text: str, jd_title: str, profile: dict) -> float | str:
     return scores["entry_or_stretch"]  # unclear title, treat as stretch rather than reject
 
 
-def _extract_years_range(jd_text: str) -> tuple[int, int] | None:
-    patterns = [
-        r"(\d+)\s*[-to]{1,3}\s*(\d+)\s*years?",
-        r"(\d+)\+\s*years?",
-    ]
-    for p in patterns:
-        m = re.search(p, jd_text.lower())
-        if m:
-            groups = m.groups()
-            if len(groups) == 2 and groups[1]:
-                return int(groups[0]), int(groups[1])
-            elif len(groups) >= 1:
-                lo = int(groups[0])
-                return lo, lo + 10  # "X+ years" treated as open-ended
+def _extract_years_range(jd_text: str) -> tuple[int, int | None] | None:
+    """Returns (lo, hi) where hi is None if only a lower bound was stated
+    (e.g. '4+ years', 'minimum 4 years', or a bare '5 years experience' with
+    no explicit range). Handles both 'years'/'year' and the very common 'yrs'/'yr'
+    abbreviation, plus en-dash/em-dash ranges, since JD text varies a lot and
+    silently failing to match here previously meant these fell through as
+    "undisclosed" and got scored favorably instead of gated -- that was the bug."""
+    text = jd_text.lower()
+
+    # 1) explicit range: "4-6 years", "4 to 6 yrs", "4–6 years", "4 — 6 yrs"
+    m = re.search(r"(\d+)\s*(?:-|–|—|to)\s*(\d+)\+?\s*(?:years?|yrs?)\b", text)
+    if m:
+        return int(m.group(1)), int(m.group(2))
+
+    # 2) "X+ years" / "X+ yrs"
+    m = re.search(r"(\d+)\s*\+\s*(?:years?|yrs?)\b", text)
+    if m:
+        return int(m.group(1)), None
+
+    # 3) "minimum/min./at least X years"
+    m = re.search(r"(?:minimum|min\.?|at least)\s*(?:of\s*)?(\d+)\s*(?:years?|yrs?)\b", text)
+    if m:
+        return int(m.group(1)), None
+
+    # 4) bare "X years [of] [relevant] experience" -- no range/plus/minimum wording,
+    # just a flat lower-bound requirement, which is common phrasing
+    m = re.search(r"(\d+)\s*(?:years?|yrs?)\s*(?:of\s*)?(?:relevant\s*)?experience\b", text)
+    if m:
+        return int(m.group(1)), None
+
     return None
 
 
@@ -65,16 +81,21 @@ def _score_experience(jd_text: str, profile: dict) -> float | str:
         return scores["1-3"]  # undisclosed -- don't penalize, assume neutral-favorable
 
     lo, hi = rng
-    if lo >= 5:
+
+    # Explicit hard rule: lower bound > 3 years is an automatic reject, regardless
+    # of the upper bound or how it was phrased (range, "X+", "minimum X", or a
+    # bare "X years experience"). This supersedes the bucket logic below --
+    # buckets only apply once we know lo <= 3.
+    if lo > 3:
         return HARD_REJECT
-    if lo <= 1 and hi <= 3:
+
+    if lo == 0 and hi is not None and hi < 1:
+        return scores["3-5_or_under_1"]  # explicit "less than 1 year" phrasing
+    if lo <= 1 and (hi is None or hi <= 3):
         return scores["1-3"]
     if lo == 2 and hi == 4:
         return scores["2-4"]
-    if (lo <= 1) or (3 <= lo <= 5 and hi <= 5):
-        return scores["3-5_or_under_1"]
-    if hi >= 5:
-        return HARD_REJECT
+    # remaining lo in {0,1,2,3} not caught above (e.g. "3 years", "2-5", "1-4")
     return scores["3-5_or_under_1"]
 
 
@@ -110,6 +131,32 @@ def _score_salary(jd_min_lpa: float | None, profile: dict) -> tuple[float | None
     return scores["above_30"], False
 
 
+def _is_education_reject(jd_text: str, profile: dict) -> bool:
+    """Hard-reject roles whose stated qualification is exclusively B.Tech/engineering
+    or CA (Chartered Accountant), UNLESS the JD also explicitly accepts MBA -- e.g.
+    'CA/MBA (Finance)' or 'Bachelor's degree, MBA preferred' should NOT be rejected,
+    since MBA is explicitly listed as acceptable. Order matters: check for an MBA
+    mention FIRST: if present, never reject on education grounds regardless of what
+    else (CA, B.Tech) is also listed as an alternative."""
+    text = jd_text.lower()
+    cfg = profile["scoring"]["p2_logistics"].get("education_gate", {})
+
+    mba_pattern = r"\bmba\b"
+    if re.search(mba_pattern, text):
+        return False  # MBA explicitly acceptable -- never reject on education
+
+    exclusive_patterns = cfg.get("reject_patterns", [
+        r"\bb\.?\s?tech\b",
+        r"\bbachelor of technology\b",
+        r"\bbachelor of engineering\b",
+        r"\bchartered accountant\b",
+        r"\bqualified\s+ca\b",
+        r"\bca\s*\(inter\)",
+        r"\bca\s+(?:mandatory|required)\b",
+    ])
+    return any(re.search(p, text) for p in exclusive_patterns)
+
+
 def score_p2(jd_text: str, jd_title: str, jd_location: str, jd_min_lpa: float | None = None) -> dict:
     profile = load_profile()
     weights = profile["scoring"]["p2_logistics"]
@@ -118,10 +165,11 @@ def score_p2(jd_text: str, jd_title: str, jd_location: str, jd_min_lpa: float | 
     exp_score = _score_experience(jd_text, profile)
     loc_score = _score_location(jd_location, profile)
     salary_score, salary_hard_reject = _score_salary(jd_min_lpa, profile)
+    education_reject = _is_education_reject(jd_text, profile)
 
-    if HARD_REJECT in (title_score, exp_score, loc_score) or salary_hard_reject:
+    if HARD_REJECT in (title_score, exp_score, loc_score) or salary_hard_reject or education_reject:
         return {"p2_score": 0, "hard_reject": True, "reject_reason": _reject_reason(
-            title_score, exp_score, loc_score, salary_hard_reject
+            title_score, exp_score, loc_score, salary_hard_reject, education_reject
         )}
 
     if salary_score is None:
@@ -152,14 +200,16 @@ def score_p2(jd_text: str, jd_title: str, jd_location: str, jd_min_lpa: float | 
     }
 
 
-def _reject_reason(title_score, exp_score, loc_score, salary_hard_reject) -> str:
+def _reject_reason(title_score, exp_score, loc_score, salary_hard_reject, education_reject=False) -> str:
     reasons = []
     if title_score == HARD_REJECT:
         reasons.append("title (Director+/CXO or 5+yr min)")
     if exp_score == HARD_REJECT:
-        reasons.append("experience (5+ yrs required)")
+        reasons.append("experience (lower bound > 3 years)")
     if loc_score == HARD_REJECT:
         reasons.append("location (outside target cities)")
     if salary_hard_reject:
         reasons.append("salary (<24 LPA)")
+    if education_reject:
+        reasons.append("education (requires B.Tech/CA without MBA as an accepted alternative)")
     return ", ".join(reasons)
