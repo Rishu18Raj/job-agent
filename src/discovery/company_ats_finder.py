@@ -22,6 +22,7 @@ from src.sources import freshteam as freshteam_source
 GREENHOUSE_JOBS_API = "https://boards-api.greenhouse.io/v1/boards/{slug}/jobs"
 LEVER_POSTINGS_API = "https://api.lever.co/v0/postings/{slug}?mode=json"
 FRESHTEAM_JOBS_URL = "https://{slug}.freshteam.com/jobs"
+ASHBY_JOB_BOARD_API = "https://api.ashbyhq.com/posting-api/job-board/{slug}"
 
 
 def _slug_variants(company_name: str) -> list[str]:
@@ -76,6 +77,19 @@ def _try_freshteam(slug: str) -> dict | None:
     return None
 
 
+def _try_ashby(slug: str) -> dict | None:
+    try:
+        resp = requests.get(ASHBY_JOB_BOARD_API.format(slug=slug), timeout=10)
+        if resp.ok:
+            data = resp.json()
+            jobs = data.get("jobs", [])
+            if isinstance(jobs, list) and len(jobs) > 0:
+                return {"ats": "ashby", "token": slug, "job_count": len(jobs)}
+    except requests.RequestException:
+        pass
+    return None
+
+
 def _try_keka(slug: str) -> dict | None:
     """Real detection via sitemap.xml (see src/sources/keka.py for why this works).
     A miss here means no sitemap was found/published, not necessarily "not on Keka"."""
@@ -98,7 +112,7 @@ def discover_ats(company_name: str) -> dict:
     variants = _slug_variants(company_name)
 
     for slug in variants:
-        for prober in (_try_greenhouse, _try_lever, _try_freshteam, _try_keka):
+        for prober in (_try_greenhouse, _try_lever, _try_ashby, _try_freshteam, _try_keka):
             result = prober(slug)
             if result:
                 return {

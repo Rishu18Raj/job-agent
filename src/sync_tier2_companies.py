@@ -20,7 +20,7 @@ HEADER = """# Tier 2 company list. Auto-populated/updated by src/sync_tier2_comp
 # overwrites or removes an existing entry.
 #
 # Supported ats values and how confident auto-discovery is for each:
-#   greenhouse, lever, freshteam, keka  -- real structural detection, auto-scanned
+#   greenhouse, lever, ashby, freshteam, keka  -- real structural detection, auto-scanned
 #     (Keka via sitemap.xml + server-rendered job detail pages -- see src/sources/keka.py)
 #   workday   -- auto-scanned only if URL fits *.wdN.myworkdayjobs.com, else manual
 #   darwinbox -- NEVER auto-scanned. Darwinbox career sites return bot-detection

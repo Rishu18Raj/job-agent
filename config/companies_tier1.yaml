@@ -2,100 +2,40 @@
 # data/tier1_companies.txt. You can also hand-edit entries directly -- the sync
 # script only ADDS companies present in the .txt but missing here; it never
 # overwrites or removes an existing entry.
-#
-# needs_manual_review: true means domain/path guessing couldn't confirm a careers
-# page -- paste the correct careers_url by hand before this firm will be scanned.
-# This happens more often for Tier 1 than Tier 2, since multi-word firm names
-# don't map predictably to a domain (no search API is used here).
 
 companies:
-- name: Goldman Sachs
-  board_type: custom
-  careers_url: https://www.goldmansachs.com/careers/
-  needs_manual_review: false
-  discovery_note: seeded manually
-- name: Morgan Stanley
-  board_type: custom
-  careers_url: https://www.morganstanley.com/people-opportunities
-  needs_manual_review: false
-  discovery_note: seeded manually
-- name: Deutsche Bank
-  board_type: custom
-  careers_url: https://careers.db.com/
-  needs_manual_review: false
-  discovery_note: seeded manually
-- name: McKinsey & Company
-  board_type: custom
-  careers_url: https://www.mckinsey.com/careers
-  needs_manual_review: false
-  discovery_note: seeded manually
-- name: Bain & Company
-  board_type: custom
-  careers_url: https://www.bain.com/careers/
-  needs_manual_review: false
-  discovery_note: seeded manually
-- name: BCG
-  board_type: custom
-  careers_url: https://careers.bcg.com/
-  needs_manual_review: false
-  discovery_note: seeded manually
-- name: Deloitte India
-  board_type: custom
-  careers_url: https://www2.deloitte.com/in/en/careers.html
-  needs_manual_review: false
-  discovery_note: seeded manually
-- name: JP Morgan
-  board_type: custom
-  careers_url: https://www.jpmorganchase.com/careers?redirect=careers_jpm
-  needs_manual_review: false
-  discovery_note: auto-matched via jpmorgan.com/careers
-- name: UBS
-  board_type: custom
-  careers_url: REPLACE_WITH_CAREERS_URL
-  needs_manual_review: true
-  discovery_note: domain/path guessing failed -- find the careers URL manually and
-    paste it in
-- name: Moelis
-  board_type: custom
-  careers_url: REPLACE_WITH_CAREERS_URL
-  needs_manual_review: true
-  discovery_note: domain/path guessing failed -- find the careers URL manually and
-    paste it in
-- name: Lazard
-  board_type: custom
-  careers_url: https://www.lazard.com/careers
-  needs_manual_review: false
-  discovery_note: auto-matched via lazard.com/careers
-- name: Citibank
-  board_type: custom
-  careers_url: REPLACE_WITH_CAREERS_URL
-  needs_manual_review: true
-  discovery_note: domain/path guessing failed -- find the careers URL manually and
-    paste it in
-- name: Avendus Capital
-  board_type: custom
-  careers_url: https://www.avendus.com/careers
-  needs_manual_review: false
-  discovery_note: auto-matched via avendus.com/careers
-- name: EY
-  board_type: custom
-  careers_url: https://www.ey.com/en_gl/careers
-  needs_manual_review: false
-  discovery_note: auto-matched via ey.com/careers
-- name: PricewaterhouseCoopers
-  board_type: custom
-  careers_url: REPLACE_WITH_CAREERS_URL
-  needs_manual_review: true
-  discovery_note: domain/path guessing failed -- find the careers URL manually and
-    paste it in
-- name: Deloitte
-  board_type: custom
-  careers_url: https://www.deloitte.com/global/en/careers/job-search.html
-  needs_manual_review: false
-  discovery_note: auto-matched via deloitte.com/jobs
-- name: Alvarez & Marsal
-  board_type: custom
-  careers_url: REPLACE_WITH_CAREERS_URL
-  needs_manual_review: true
-  discovery_note: domain/path guessing failed -- find the careers URL manually and
-    paste it in
+  - name: "Goldman Sachs"
+    board_type: "custom"
+    careers_url: "https://www.goldmansachs.com/careers/"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "Morgan Stanley"
+    board_type: "custom"
+    careers_url: "https://www.morganstanley.com/people-opportunities"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "Deutsche Bank"
+    board_type: "custom"
+    careers_url: "https://careers.db.com/"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "McKinsey & Company"
+    board_type: "custom"
+    careers_url: "https://www.mckinsey.com/careers"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "Bain & Company"
+    board_type: "custom"
+    careers_url: "https://www.bain.com/careers/"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "BCG"
+    board_type: "custom"
+    careers_url: "https://careers.bcg.com/"
+    needs_manual_review: false
+    discovery_note: "seeded manually"
+  - name: "Deloitte India"
+    board_type: "custom"
+    careers_url: "https://www2.deloitte.com/in/en/careers.html"
+    needs_manual_review: false
+    discovery_note: "seeded manually"

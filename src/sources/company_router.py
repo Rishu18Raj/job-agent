@@ -1,6 +1,6 @@
 import yaml
 from pathlib import Path
-from src.sources import greenhouse, lever, workday, freshteam, keka, generic_scraper
+from src.sources import greenhouse, lever, ashby, workday, freshteam, keka, generic_scraper
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 
@@ -29,6 +29,8 @@ def fetch_all_jobs() -> list[dict]:
                 jobs = greenhouse.fetch_jobs(token)
             elif ats == "lever":
                 jobs = lever.fetch_jobs(token)
+            elif ats == "ashby":
+                jobs = ashby.fetch_jobs(token)
             elif ats == "workday":
                 jobs = workday.fetch_jobs(token, name)
             elif ats == "freshteam":
