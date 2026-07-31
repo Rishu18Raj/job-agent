@@ -82,8 +82,12 @@ def run():
             "Status": "New",
         })
 
-        # P1 sub-score breakdown goes in a cell note per our schema decision, not its own column
+        # P1 and P2 sub-score breakdowns go in cell notes per our schema decision,
+        # not their own columns -- this is what lets you audit exactly why any
+        # given role scored the way it did (hover/click the little red triangle
+        # on the P1 Score / P2 Score cells in the sheet).
         add_note_to_cell("Tier2", row_number, "P1 Score", str(p1["sub_scores"]))
+        add_note_to_cell("Tier2", row_number, "P2 Score", str(p2.get("sub_scores", {})))
 
         if overall >= thresholds["surface_and_notify_min"]:
             send_match_email(company, role, overall, jd_link, tier="Tier2")
