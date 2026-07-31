@@ -23,7 +23,7 @@ def run():
                 continue
 
             if e["amount_usd"] is not None and e["amount_usd"] < min_funding:
-                mark_seen(company, "funding-round", link)
+                mark_seen("Tier3", company, "funding-round", link)
                 continue
 
             founder_lookup = search_founder_linkedin(company)
@@ -44,7 +44,7 @@ def run():
             })
 
             send_match_email(company, "New funding -- check for business-side roles", 100, link, tier="Tier3")
-            mark_seen(company, "funding-round", link)
+            mark_seen("Tier3", company, "funding-round", link)
 
 
 if __name__ == "__main__":
