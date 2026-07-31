@@ -4,6 +4,30 @@ from src.config import load_profile
 HARD_REJECT = "HARD_REJECT"
 
 
+TECHNICAL_ROLE_TITLE_SIGNALS = [
+    "site reliability engineer", "sre", "software engineer", "software developer",
+    "devops", "backend engineer", "frontend engineer", "full stack", "fullstack",
+    "data engineer", "machine learning engineer", "ml engineer", "ai engineer",
+    "qa engineer", "sdet", "platform engineer", "infrastructure engineer",
+    "cloud engineer", "mobile engineer", "ios developer", "android developer",
+    "systems engineer", "network engineer", "security engineer",
+]
+
+
+def _is_technical_role_mismatch(jd_title: str) -> bool:
+    """Deterministic backstop, independent of the LLM. Added after a real failure
+    case where an SRE role scored 76% overall because the LLM's P1 sub-scores were
+    generously inflated (hard_skill_match: 90, transferable: 95) despite its own
+    rationale admitting the role wasn't a fit -- prompt tuning alone isn't fully
+    reliable against this kind of leniency bias, so this catches the obvious cases
+    before any LLM call happens (also saves the API cost on jobs that were never
+    going to be relevant). This only checks the JOB TITLE, not JD body text, to
+    avoid false-positives on finance roles that happen to mention "engineering"
+    in passing (e.g. "financial engineering" concepts, "re-engineering a process")."""
+    title_lower = jd_title.lower()
+    return any(signal in title_lower for signal in TECHNICAL_ROLE_TITLE_SIGNALS)
+
+
 def _score_title(jd_text: str, jd_title: str, profile: dict) -> float | str:
     cfg = profile["candidate"]["seniority_titles_match"]
     scores = profile["scoring"]["p2_logistics"]["seniority_title_scores"]
@@ -166,10 +190,11 @@ def score_p2(jd_text: str, jd_title: str, jd_location: str, jd_min_lpa: float | 
     loc_score = _score_location(jd_location, profile)
     salary_score, salary_hard_reject = _score_salary(jd_min_lpa, profile)
     education_reject = _is_education_reject(jd_text, profile)
+    technical_mismatch = _is_technical_role_mismatch(jd_title)
 
-    if HARD_REJECT in (title_score, exp_score, loc_score) or salary_hard_reject or education_reject:
+    if HARD_REJECT in (title_score, exp_score, loc_score) or salary_hard_reject or education_reject or technical_mismatch:
         return {"p2_score": 0, "hard_reject": True, "reject_reason": _reject_reason(
-            title_score, exp_score, loc_score, salary_hard_reject, education_reject
+            title_score, exp_score, loc_score, salary_hard_reject, education_reject, technical_mismatch
         )}
 
     if salary_score is None:
@@ -200,7 +225,7 @@ def score_p2(jd_text: str, jd_title: str, jd_location: str, jd_min_lpa: float | 
     }
 
 
-def _reject_reason(title_score, exp_score, loc_score, salary_hard_reject, education_reject=False) -> str:
+def _reject_reason(title_score, exp_score, loc_score, salary_hard_reject, education_reject=False, technical_mismatch=False) -> str:
     reasons = []
     if title_score == HARD_REJECT:
         reasons.append("title (Director+/CXO or 5+yr min)")
@@ -212,4 +237,6 @@ def _reject_reason(title_score, exp_score, loc_score, salary_hard_reject, educat
         reasons.append("salary (<24 LPA)")
     if education_reject:
         reasons.append("education (requires B.Tech/CA without MBA as an accepted alternative)")
+    if technical_mismatch:
+        reasons.append("function (technical/engineering role title, e.g. SRE/SWE/DevOps -- deterministic, skipped LLM call)")
     return ", ".join(reasons)
