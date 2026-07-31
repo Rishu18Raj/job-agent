@@ -4,7 +4,6 @@
 #
 # Paste your actual company list here, replacing the examples below.
 
-Paytm
 Razorpay
 Cashfree Payments
 Mobikwik
