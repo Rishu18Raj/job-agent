@@ -15,16 +15,6 @@
 # fix "token" (and possibly "ats") by hand before this company will be scanned.
 
 companies:
-- name: Paytm
-  ats: lever
-  token: paytm
-  needs_manual_review: false
-  discovery_note: seeded manually, confirmed via jobs.lever.co/paytm
-- name: Paytm Payments Services
-  ats: lever
-  token: paytmpayments
-  needs_manual_review: false
-  discovery_note: seeded manually, confirmed via jobs.lever.co/paytmpayments
 - name: Jupiter Money
   ats: keka
   token: jupiter
