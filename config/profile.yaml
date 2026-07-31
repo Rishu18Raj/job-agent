@@ -38,6 +38,21 @@ scoring:
     # sub-weights within P2 (must sum to 1.0 when salary is disclosed; reweighted proportionally if not)
     seniority_title: 0.35
     experience_years: 0.20
+
+    # Hard-reject gate, not a scored sub-component. If the JD text mentions "MBA"
+    # anywhere, this gate never fires (MBA is explicitly acceptable, even alongside
+    # CA/B.Tech as alternatives -- e.g. "CA/MBA (Finance)"). Otherwise, any of the
+    # patterns below matching is an automatic reject. Edit reject_patterns here if
+    # you want to tune it without touching code.
+    education_gate:
+      reject_patterns:
+        - '\bb\.?\s?tech\b'
+        - '\bbachelor of technology\b'
+        - '\bbachelor of engineering\b'
+        - '\bchartered accountant\b'
+        - '\bqualified\s+ca\b'
+        - '\bca\s*\(inter\)'
+        - '\bca\s+(?:mandatory|required)\b'
     location: 0.35
     salary: 0.10
 
