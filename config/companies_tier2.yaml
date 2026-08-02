@@ -566,3 +566,7 @@ companies:
     it in a browser; if it's real, change ats to 'darwinbox' (still manual-only, see
     company_router.py) and fix the token if the URL differs. If it 404s, this company
     likely uses Workday or a custom page -- replace token with the real URL.
+- name: Shopflo 
+  ats: keka
+  token: shopflo
+  needs_manual_review: fase
