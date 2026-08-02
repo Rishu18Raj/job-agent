@@ -66,3 +66,6 @@ PhysicsWallah
 Zerodha
 Udaan
 Delhivery
+ShopFlo
+Revspot
+Bolna
